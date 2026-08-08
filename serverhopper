@@ -5,10 +5,12 @@ task.spawn(function()
     local CoreGui      = game:GetService("CoreGui")
     local RunService   = game:GetService("RunService")
 
+    -- Esperar carga real del cliente
     if not game:IsLoaded() then game.Loaded:Wait() end
     RunService.RenderStepped:Wait()
     task.wait(0.4)
 
+    -- Destruir intro anterior si existe
     pcall(function()
         if CoreGui:FindFirstChild("CeboScriptsIntro") then
             CoreGui.CeboScriptsIntro:Destroy()
@@ -43,11 +45,14 @@ task.spawn(function()
     Title.Text = "CeboScripts On Top 😈 No hables mal de Cebolla Chochis JAJAJA 🤡\n\nDiscord:\nhttps://discord.gg/sR2cDDhfh"
     Title.Parent = Overlay
 
+    -- Fade IN más elegante
     local tweenInfoIn = TweenInfo.new(1.9, Enum.EasingStyle.Quint, Enum.EasingDirection.Out)
     TweenService:Create(Overlay, tweenInfoIn, {BackgroundTransparency = 0.04}):Play()
     TweenService:Create(Title,   tweenInfoIn, {TextTransparency = 0.05}):Play()
+
     task.wait(10)
 
+    -- Fade OUT
     local tweenInfoOut = TweenInfo.new(1.5, Enum.EasingStyle.Quint, Enum.EasingDirection.In)
     local fadeOutBG   = TweenService:Create(Overlay, tweenInfoOut, {BackgroundTransparency = 1})
     local fadeOutText = TweenService:Create(Title,   tweenInfoOut, {TextTransparency = 1})
@@ -57,10 +62,13 @@ task.spawn(function()
     fadeOutText.Completed:Wait()
     task.wait(0.2)
     IntroGui:Destroy()
+
     task.spawn(function()
         local TextChatService = game:GetService("TextChatService")
         local Players = game:GetService("Players")
         local RunService = game:GetService("RunService")
+
+        -- Esperamos un poco para que el chat cargue bien
         task.wait()
 
         local generalChannel = TextChatService:FindFirstChild("TextChannels") 
